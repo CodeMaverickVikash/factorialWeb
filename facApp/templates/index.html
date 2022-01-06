@@ -5,11 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factorial</title>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <form action="GET">
-        <label for="">Enter number:</label>
-        <input type="number">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label for="">Enter number: </label>
+        <input type="number" name="num" id="num">
     </form>
+
+
+    <script>
+        $('#num').keypress(function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {
+            $('input[name = num]').click();
+            let num = document.getElementById("num").value;
+            // console.log(num)
+
+            $.ajax({
+                url: 'http://127.0.0.1:8000/fact/',
+                type: 'GET',
+                body: { number: num},
+
+                success: function(result){
+                    // $('#dataget').html(result);
+                    console.log(result)
+                }
+            });
+
+            return false;  
+        }
+        }); 
+    </script>
 </body>
 </html>
